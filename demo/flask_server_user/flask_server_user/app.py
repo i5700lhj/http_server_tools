@@ -17,9 +17,9 @@ from flask_server_user import public, user
 from flask_server_user.extensions import (
     # bcrypt,
     # cache,
-    csrf_protect, #防跨站脚本攻击扩展功能
+    csrf_protect,  # 防跨站脚本攻击扩展功能
     # db,
-    debug_toolbar,  #激活flask debug tool bar功能
+    debug_toolbar,  # 激活flask debug tool bar功能
     # login_manager,
     # migrate,
     # webpack,
@@ -31,7 +31,6 @@ def create_app(config_object="flask_server_user.settings"):
 
     :param config_object: The configuration object to use.
     """
-    print(__name__.split(".")[0])
     app = Flask(__name__)
     app.config.from_object(config_object)
     api_demo(app)
@@ -65,6 +64,7 @@ def register_blueprints(app):
     app.register_blueprint(user.views.blueprint)
     return None
 
+
 def register_extensions(app):
     """Register Flask extensions."""
     # bcrypt.init_app(app)
@@ -72,7 +72,7 @@ def register_extensions(app):
     # db.init_app(app)
     csrf_protect.init_app(app)
     # login_manager.init_app(app)
-    debug_toolbar.init_app(app)
+    debug_toolbar.init_app(app)    # 对外发布前，注释掉此段代码，则不显示主页的flask debug右则信息
     # migrate.init_app(app, db)
     # webpack.init_app(app)
     return None
