@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """User forms."""
+from flask import current_app
 from flask_wtf import FlaskForm
 from wtforms import PasswordField, StringField
 from wtforms.validators import DataRequired, Email, EqualTo, Length
@@ -34,6 +35,7 @@ class RegisterForm(FlaskForm):
         initial_validation = super(RegisterForm, self).validate()
         if not initial_validation:
             return False
+
         user = User.query.filter_by(username=self.username.data).first()
         if user:
             self.username.errors.append("Username already registered")
