@@ -1,8 +1,10 @@
 - 本实例是基于 cookiecutter-flask 模板自动生成的flask项目工程，使用方法如下：
-# 启动DEMO
-在当前目录下执行：    
+# 如何启动项目
+## 在当前目录下启动    
 flask run   
-来启动项目，默认端口为 http://127.0.0.1:5000/    
+来启动项目，默认端口为 http://127.0.0.1:5000/
+## 在pycharm中启动
+在pycharm中执行autoapp.py    
 # 若要自定义启动端口，则执行如下命令：        
 flask run --port=5001    
 来启动项目，则启动端口为 http://127.0.0.1:5001/    
@@ -23,7 +25,7 @@ engine = create_engine('sqlite:///C:\\path\\to\\foo.db')
 engine = create_engine(r'sqlite:///C:\path\to\foo.db')
 
 ### sqlite命令参考：
-C:\Users\xl\Documents\http_server_tools\demo\flask_server_user\tmp>sqlite3    
+C:\Users\xl\Documents\http_server_tools\tmp>sqlite3    
 SQLite version 3.22.0   
 Enter ".help" for usage hints.    
 Connected to a transient in-memory database.    
