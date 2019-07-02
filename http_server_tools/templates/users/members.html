@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ current_user.username }}{% endblock %}
+
+{% block main %}
+    <div class="container">
+        <h1>Welcome {{ current_user.username }}</h1>
+        <h3>This is the members-only page.</h3>
+    </div>
+    <p> Click <a href="{{ url_for('public.login') }}">here</a> to your home page.</p>
+{% endblock %}
+
+
