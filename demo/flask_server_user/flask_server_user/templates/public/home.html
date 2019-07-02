@@ -1,60 +1,15 @@
-<!doctype html>
-<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
-<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
-<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
-<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
-<head>
-  <title>Flask Server User</title>
-</head>
-<body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-  <h1 class="mt-5">Login</h1>
+{% extends 'base.html' %}
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+{% block title %}首页{% endblock %}
 
-    {% if current_user and current_user.is_authenticated %}
-    <ul class="navbar-nav my-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="{{ url_for('user.members') }}">Logged in as {{ current_user.username }}</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{{ url_for('public.logout') }}">
-          <i class="fa fa-sign-out"></i>
-        </a>
-      </li>
-    </ul>
-    {% elif form %}
-    <form class="form-inline" id="loginForm" method="POST" action="/" role="login">
-      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-      <div class="input-group mb-2 mr-sm-2">
-        {{ form.username(placeholder="Username", class_="form-control mr-sm-1 my-auto") }} {{ form.password(placeholder="Password",
-        class_="form-control mr-sm-1 my-auto") }}
-        <button class="btn btn-light btn-primary m-auto" type="submit">Login</button>
-      </div>
-    </form>
-    <ul class="navbar-nav my-auto">
-      <li class="nav-item">
-        <a class="nav-link navbar-text" href="{{ url_for('public.register') }}">Create account</a>
-      </li>
-    </ul>
-    {% endif %}
-  </div><!-- /.navbar-collapse -->
-    <footer>
-      <small>
-      <ul class="company">
-        <li>© joker-i5700</li>
-      </ul>
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+{% endblock %}
 
-        <ul class="footer-nav">
+{% block main %}
+  <h3 class="page-title">主页内容</h3>
 
-          <li><a href="{{ url_for('public.about') }}">About</a></li>
 
-          <li><a href="mailto:251641059@qq.com">Contact</a></li>
-        </ul>
-      </small>
-    </footer>
-</nav>
-</body>
-</html>
+{% endblock %}
+
 

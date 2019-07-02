@@ -1,13 +1,9 @@
-<!doctype html>
-<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
-<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
-<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
-<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
-<head>
-  <title>Flask Server User</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block title %}注册{% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login_regist.css') }}">
+{% endblock %}
+{% block main %}
 <div class="container-narrow">
   <h1 class="mt-5">Register</h1>
     <br/>
@@ -32,8 +28,7 @@
             </div>
             <p><input class="btn btn-primary" type="submit" value="Register"></p>
     </form>
-    <p><em>Already registered?</em> Click <a href="/">here</a> to login.</p>
+    <p><em>Already registered?</em> Click <a href="{{ url_for('public.login') }}">here</a> to login.</p>
 </div>
-</body>
-</html>
+{% endblock %}
 

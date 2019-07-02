@@ -31,6 +31,14 @@ def home():
     """Home page."""
     form = LoginForm(request.form)
     current_app.logger.info("Hello from the home page!")
+    return render_template("public/home.html", form=form)
+
+
+@blueprint.route("/login/", methods=["GET", "POST"])
+def login():
+    """login page."""
+    form = LoginForm(request.form)
+    current_app.logger.info("Hello from the login page!")
     # Handle logging in
     if request.method == "POST":
         if form.validate_on_submit():
@@ -40,7 +48,7 @@ def home():
             return redirect(redirect_url)
         else:
             flash_errors(form)
-    return render_template("public/home.html", form=form)
+    return render_template("public/login.html", form=form)
 
 
 @blueprint.route("/logout/")
@@ -75,4 +83,3 @@ def about():
     """About page."""
     form = LoginForm(request.form)
     return render_template("public/about.html", form=form)
-
