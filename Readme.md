@@ -17,12 +17,12 @@ flask db upgrade
 ./tmp/dev.db
 ## sqlite数据库配置路径:    
 工程根目录下 ".env" 文件中配置，配置方法参考：    
-\#Unix/Mac - 4 initial slashes in total
-engine = create_engine('sqlite:////absolute/path/to/foo.db')
-\#Windows
-engine = create_engine('sqlite:///C:\\path\\to\\foo.db')
-\#Windows alternative using raw string
-engine = create_engine(r'sqlite:///C:\path\to\foo.db')
+\#Unix/Mac - 4 initial slashes in total    
+engine = create_engine('sqlite:////absolute/path/to/foo.db')    
+\#Windows    
+engine = create_engine('sqlite:///C:\\path\\to\\foo.db')    
+\#Windows alternative using raw string    
+engine = create_engine(r'sqlite:///C:\path\to\foo.db')    
 
 ### sqlite命令参考：
 C:\Users\xl\Documents\http_server_tools\tmp>sqlite3    
