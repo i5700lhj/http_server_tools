@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}RobotFramework{% endblock %}
+
+{% block head %}
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <meta name="generator" content="Bootstrap Listr">
+
+  <link rel="stylesheet" href="{{url_for('static', filename='css/listr.pack.css')}}">
+  <link rel="stylesheet" href="{{url_for('static', filename='css/jquery.filer.css')}}">
+{% endblock %}
+
+{% block main %}
+{% if current_user and current_user.is_authenticated %}
+    <h3 class="page-title">RobotFramework脚本转换工具</h3>
+{% else %}
+    <h3 class="page-title">请登录</h3>
+{% endif %}
+<div class="main">
+<form method=post enctype=multipart/form-data>
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+  <input type=file class="btn btn-secondary text-muted col-md-12" name=file>
+  <input type=submit class="btn btn-secondary col-xl-12" value=Upload>
+  <div class="btn btn-secondary col-xl-12" >
+    <a href="{{ url_for('tools.tools_download') }}">History</a>
+  </div>
+</form>
+<tfoot>
+<tr>
+  <td colspan="3">
+      <small class="pull-xs-left text-muted" dir="ltr">*Only support zip/rar/json file upload!!!</small>
+  </td>
+</tr>
+</tfoot>
+</div>
+
+{% endblock %}
