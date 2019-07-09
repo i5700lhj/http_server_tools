@@ -48,8 +48,21 @@
               </div><!-- /.container-fluid -->
             </nav>
 
- {% block main %}{% endblock %}
 
+
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <ul class="flash">
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}" style="text-align: center">
+                        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                        <strong>{{ message }}</strong></div>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+ {% block main %}{% endblock %}
 </body>
 
 </html>
