@@ -19,21 +19,9 @@
     <h3 class="page-title">请登录</h3>
 {% endif %}
 <div class="main">
-<form method=post enctype=multipart/form-data>
-  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-  <input type=file class="btn btn-secondary text-muted col-lg-12" name=file>
-  <input type=submit class="btn btn-secondary col-lg-12" value=Upload>
-  <div class="btn-group" >
-    <a class="btn btn-secondary col-lg-12" href="{{ url_for('tools.tools_download') }}">History</a>
+  <div class="btn btn-secondary col-xl-12" >
+    <a href="{{ url_for('tools.to_rf_main') }}">Generate</a>
   </div>
-</form>
-<tfoot>
-<tr>
-  <td colspan="3">
-      <small class="pull-xs-left text-muted" dir="ltr">*support zip/rar/json file upload!!!</small>
-  </td>
-</tr>
-</tfoot>
 </div>
 
 {% endblock %}
