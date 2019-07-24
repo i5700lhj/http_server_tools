@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}RobotFramework{% endblock %}
+{% block title %}脚本转换工具{% endblock %}
 
 {% block head %}
   <meta charset="utf-8">
@@ -24,7 +24,7 @@
   <input type=file class="btn btn-secondary text-muted col-lg-12" name=file>
   <input type=submit class="btn btn-secondary col-lg-12" value=Upload>
   <div class="btn-group" >
-    <a class="btn btn-secondary col-lg-12" href="{{ url_for('tools.tools_download') }}">History</a>
+    <a class="btn btn-secondary col-lg-12" href="{{ url_for('tools.history') }}">History</a>
   </div>
 </form>
 <tfoot>
