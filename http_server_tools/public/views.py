@@ -43,9 +43,9 @@ def login():
     if request.method == "POST":
         if form.validate_on_submit():
             login_user(form.user)
-            flash("You are logged in.", "success")
-            redirect_url = request.args.get("next") or url_for("user.members")
-            return redirect(redirect_url)
+            flash("Logged in success ! Welcome %s !" % form.user.username, "success")
+            # redirect_url = request.args.get("next") or url_for("user.members")
+            # return redirect(redirect_url)
         else:
             flash_errors(form)
     return render_template("public/login.html", form=form)
@@ -83,3 +83,9 @@ def about():
     """About page."""
     form = LoginForm(request.form)
     return render_template("public/about.html", form=form)
+
+@blueprint.route("/egg/")
+@login_required
+def egg():
+    """egg page."""
+    return render_template("public/egg.html")
