@@ -45,12 +45,13 @@ BASE_DIR = BASE_DIR.replace('\\', '/')
 ROOT_FOLDER = BASE_DIR + "/generate/history_files"
 UPLOAD_FOLDER = BASE_DIR + "/tmp"
 UPLOAD_FILE_NAME = ""
+CURRENT_FOLDER = ""
 
 
 @blueprint.route("/download", methods=["GET", "POST"])
 @blueprint.route("/<path:p>", methods=["GET", "POST"])
 @login_required
-def tools_download(p=''):
+def tools_download(p=UPLOAD_FOLDER):
     current_app.logger.info("in get! method=%s" % request.method)
     hide_dotfile = request.args.get(
         'hide-dotfile',
@@ -227,6 +228,11 @@ def uploaded_file():
     # return redirect(url_for('tools.tools_download'))
     return render_template("tools/to_rf_main.html")
 
+@blueprint.route('/history', methods=['GET', 'POST'])
+@login_required
+def history():
+    return tools_download(ROOT_FOLDER)
+
 
 @blueprint.route('/generate', methods=['GET', 'POST'])
 @login_required
@@ -286,7 +292,7 @@ def to_rf_main():
                      time.time()))))
 
     # 显示出已生成文件名称
-    flash('Generate file %s successfully!!!' %
-          ','.join(_upload_file_names), 'info')
+    flash('Generate file %s successfully!!!' % ','.join(_upload_file_names), 'info')
     # 转到上传、下载文件目录
-    return tools_download(UPLOAD_FOLDER)
+    # return tools_download(UPLOAD_FOLDER)
+    return redirect(url_for('tools.tools_download'))
