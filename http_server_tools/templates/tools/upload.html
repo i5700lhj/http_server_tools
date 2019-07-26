@@ -3,26 +3,42 @@
 {% block title %}脚本转换工具{% endblock %}
 
 {% block head %}
-  <meta charset="utf-8">
-
+    <meta charset="utf-8">
+    <style>
+    .main{
+        background: #fff;
+        width: 450px;
+        margin: 0 auto;
+        overflow: hidden;
+        padding: 10px;
+    }
+    .btn-secondary{
+        width: 430px;
+    color:#373a3c;background-color:#fff;border-color:#ccc
+    }
+    .btn-secondary.focus,.btn-secondary:focus,.btn-secondary:hover{color:#373a3c;background-color:#e6e6e6;border-color:#adadad}.btn-secondary.active,.btn-secondary:active,.open>.btn-secondary.dropdown-toggle{color:#373a3c;background-color:#e6e6e6;border-color:#adadad;background-image:none}.btn-secondary.active.focus,.btn-secondary.active:focus,.btn-secondary.active:hover,.btn-secondary:active.focus,.btn-secondary:active:focus,.btn-secondary:active:hover,.open>.btn-secondary.dropdown-toggle.focus,.open>.btn-secondary.dropdown-toggle:focus,.open>.btn-secondary.dropdown-toggle:hover{color:#373a3c;background-color:#d4d4d4;border-color:#8c8c8c}.btn-secondary.disabled.focus,.btn-secondary.disabled:focus,.btn-secondary.disabled:hover,.btn-secondary:disabled.focus,.btn-secondary:disabled:focus,.btn-secondary:disabled:hover{background-color:#fff;border-color:#ccc}
+    </style>
 
 
 {% endblock %}
 
 {% block main %}
-{% if current_user and current_user.is_authenticated %}
-    <h3 class="page-title">RobotFramework脚本转换工具</h3>
-{% else %}
-    <h3 class="page-title">请登录</h3>
-{% endif %}
+    <h3 style="text-align: center;">RobotFramework脚本转换工具</h3>
+
 <div class="main">
 <form method=post enctype=multipart/form-data>
+<div>
   <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-  <input type=file class="btn btn-secondary text-muted col-lg-12" name=file>
-  <input type=submit class="btn btn-secondary col-lg-12" value=Upload>
-  <div class="btn-group" >
-    <a class="btn btn-secondary col-lg-12" href="{{ url_for('tools.history') }}">History</a>
-  </div>
+  <input type=file class="btn btn-secondary text-muted" name=file>
+</div>
+    <br/>
+    <div>
+  <input type=submit class="btn btn-secondary" value=Upload>
+</div>
+
+<div>
+    <a class="btn btn-secondary" href="{{ url_for('tools.history') }}">History</a>
+</div>
 </form>
 <tfoot>
 <tr>
