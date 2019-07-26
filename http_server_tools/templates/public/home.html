@@ -46,20 +46,32 @@
 <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 
 <div class="div">
+	{% if current_user and current_user.is_authenticated %}
+	<div class="wrapper">
+	  <div class="header-wrap" >
+		  <h1><a href="{{ url_for('public.logout') }}">Logout</a></h1>
+	  </div>
+	</div>
 
+	<div class="wrapper">
+	  <div class="header-wrap">
+		  <h5><a href="{{ url_for('tools.cards') }}">✅Tools</a></h5>
+	  </div>
+	</div>
+
+
+	{% else %}
 	<div class="wrapper">
 	  <div class="header-wrap" >
 		  <h5><a href="{{ url_for('public.login') }}">Login</a></h5>
 	  </div>
 	</div>
 
-	<div style="display: inline-block; width: 20px"></div>
 
-	<div class="wrapper">
-	  <div class="header-wrap" >
-		  <h5><a href="{{ url_for('public.about') }}"></a></h5>
-	  </div>
-	</div>
+	{% endif %}
+	<!--保留关于页链接，占位 -->
+
+
 </div>
 <div class="ele-container">
   <div class="ele-wrapper">
