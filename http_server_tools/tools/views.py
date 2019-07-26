@@ -47,6 +47,11 @@ UPLOAD_FOLDER = BASE_DIR + "/tmp"
 UPLOAD_FILE_NAME = ""
 CURRENT_FOLDER = ""
 
+@blueprint.route('/cards', methods=['GET', 'POST'])
+@login_required
+def cards():
+    return render_template("tools/tools.html")
+
 
 @blueprint.route("/download", methods=["GET", "POST"])
 @blueprint.route("/<path:p>", methods=["GET", "POST"])
