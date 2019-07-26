@@ -38,14 +38,14 @@ def home():
 def login():
     """login page."""
     form = LoginForm(request.form)
-    current_app.logger.info("Hello from the login page!")
+    current_app.logger.info("Hello from the login page! %s" % request.form)
     # Handle logging in
     if request.method == "POST":
         if form.validate_on_submit():
             login_user(form.user)
             flash("Logged in success ! Welcome %s !" % form.user.username, "success")
-            # redirect_url = request.args.get("next") or url_for("user.members")
-            # return redirect(redirect_url)
+            redirect_url = request.args.get("next") or url_for("tools.cards")
+            return redirect(redirect_url)
         else:
             flash_errors(form)
     return render_template("public/login.html", form=form)
@@ -57,7 +57,7 @@ def logout():
     """Logout."""
     logout_user()
     flash("You are logged out.", "info")
-    return redirect(url_for("public.home"))
+    return redirect(url_for("public.login"))
 
 
 @blueprint.route("/register/", methods=["GET", "POST"])
@@ -89,3 +89,8 @@ def about():
 def egg():
     """egg page."""
     return render_template("public/egg.html")
+
+@blueprint.route("/demo/")
+def demo():
+    """egg page."""
+    return render_template("public/demo.html")
