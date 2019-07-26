@@ -2,12 +2,14 @@
 {% block title %}注册{% endblock %}
 {% block head %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/login_regist.css') }}">
+    <style>
+    </style>
 {% endblock %}
 {% block main %}
-<div class="main">
+<div class="register-main">
   <h1 class="mt-5">Register</h1>
     <br/>
-    <form id="registerForm" class="form form-register" method="POST" action="" role="form">
+    <form id="registerForm" class="form" method="POST" action="" role="form">
            {{ form.csrf_token }}
             <div class="form-group">
                 {{form.username.label}}
@@ -26,7 +28,8 @@
                 {{form.confirm.label}}
                 {{form.confirm(placeholder="Password (again)", class_="form-control")}}
             </div>
-            <p><input class="btn btn-primary" type="submit" value="Register"></p>
+            <br/>
+            <p><input class="register-button" type="submit" value="Register"></p>
     </form>
     <p><em>Already registered?</em> Click <a href="{{ url_for('public.login') }}">here</a> to login.</p>
 </div>

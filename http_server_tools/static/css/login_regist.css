@@ -1,3 +1,48 @@
+.login-main{
+    background: #fff;
+    width: 300px;
+    margin: 0 auto;
+    overflow: hidden;
+    padding: 10px;
+}
+.register-main{
+    background: #fff;
+    width: 300px;
+    margin: 0 auto;
+    overflow: hidden;
+    padding: 10px;
+}
+.login-body {
+    padding: 0 25px;
+}
+.login-remember {
+    margin: 25px 0 0;
+    height: 20px;
+}
+.login-button {
+    width: 100%;
+    border: 0;
+    color: #fff;
+    background: #246bb3;
+    border-radius: 4px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 20px;
+    padding: 0;
+    transition: background .2s;
+}
+.register-button {
+    width: 100%;
+    border: 0;
+    color: #fff;
+    background: #246bb3;
+    border-radius: 4px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 20px;
+    padding: 0;
+    transition: background .2s;
+}
 .form-container{
     width: 300px;
     margin: 0 auto;
