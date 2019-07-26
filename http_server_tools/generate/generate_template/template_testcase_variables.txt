@@ -1,0 +1,1 @@
+${VAR_HOST}     http://test.api-shoulei-ssl.xunlei.com

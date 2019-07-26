@@ -13,10 +13,14 @@ from flask import (
     url_for
 )
 from flask_login import login_required
+# from http_server_tools.utils import flash_errors
+from http_server_tools.generate.generate_to_rf import GenerateRF
 
 import os
 import re
 import json
+import shutil
+import time
 import stat
 import mimetypes
 from werkzeug import secure_filename
@@ -35,14 +39,24 @@ blueprint = Blueprint(
     url_prefix="/tools",
     static_folder="../static")
 
-root = r"C:\Users\xl\Documents\http_server_tools\http_server_tools\tmp"
-UPLOAD_FOLDER = r"C:\Users\xl\Documents\http_server_tools\http_server_tools\tmp"
+BASE_DIR = str(os.path.dirname(os.path.dirname(__file__)))
+BASE_DIR = BASE_DIR.replace('\\', '/')
+
+ROOT_FOLDER = BASE_DIR + "/generate/history_files"
+UPLOAD_FOLDER = BASE_DIR + "/tmp"
+UPLOAD_FILE_NAME = ""
+CURRENT_FOLDER = ""
+
+@blueprint.route('/cards', methods=['GET', 'POST'])
+@login_required
+def cards():
+    return render_template("tools/tools.html")
 
 
 @blueprint.route("/download", methods=["GET", "POST"])
 @blueprint.route("/<path:p>", methods=["GET", "POST"])
 @login_required
-def tools_download(p=''):
+def tools_download(p=UPLOAD_FOLDER):
     current_app.logger.info("in get! method=%s" % request.method)
     hide_dotfile = request.args.get(
         'hide-dotfile',
@@ -50,7 +64,7 @@ def tools_download(p=''):
             'hide-dotfile',
             'no'))
 
-    path = os.path.join(root, p)
+    path = os.path.join(ROOT_FOLDER, p)
     if os.path.isdir(path):
         contents = []
         total = {'size': 0, 'dir': 0, 'file': 0}
@@ -93,7 +107,7 @@ def tools_download(p=''):
 
 def post(p=''):
     current_app.logger.info("in post!")
-    path = os.path.join(root, p)
+    path = os.path.join(ROOT_FOLDER, p)
     info = {}
     if os.path.isdir(path):
         files = request.files.getlist('files[]')
@@ -172,9 +186,21 @@ def allowed_file(filename):
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
+def del_folder_files(path):
+    ls = os.listdir(path)
+    for i in ls:
+        c_path = os.path.join(path, i)
+        if os.path.isdir(c_path):
+            del_folder_files(c_path)
+        else:
+            os.remove(c_path)
+
+
 @blueprint.route('/upload', methods=['GET', 'POST'])
 @login_required
 def upload_file():
+    # 进入上传文件界面，清理UPLOAD_FOLDER目录
+    del_folder_files(UPLOAD_FOLDER)
     if request.method == 'POST':
         # check if the post request has the file part
         if 'file' not in request.files:
@@ -187,14 +213,15 @@ def upload_file():
             flash('No selected file', 'warning')
             return redirect(request.url)
         if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
+            global UPLOAD_FILE_NAME
+            UPLOAD_FILE_NAME = secure_filename(file.filename)
             # UPLOAD_FOLDER = './upload_dir/'
             # CreateNewDir()
-            global UPLOAD_FOLDER
-            file.save(os.path.join(UPLOAD_FOLDER, filename))
-            flash('upload file success', 'success')
+            # global UPLOAD_FOLDER
+            file.save(os.path.join(UPLOAD_FOLDER, UPLOAD_FILE_NAME))
+            flash('Upload file %s SUCCESS !!!' % UPLOAD_FILE_NAME, 'success')
             return redirect(url_for('tools.uploaded_file',
-                                    filename=filename))
+                                    filename=UPLOAD_FILE_NAME))
         else:
             flash('Only support zip/rar/json file upload!!!', 'warning')
     return render_template("tools/upload.html")
@@ -203,4 +230,74 @@ def upload_file():
 @blueprint.route('/uploaded', methods=['GET', 'POST'])
 @login_required
 def uploaded_file():
+    # return redirect(url_for('tools.tools_download'))
+    return render_template("tools/to_rf_main.html")
+
+@blueprint.route('/history', methods=['GET', 'POST'])
+@login_required
+def history():
+    return tools_download(ROOT_FOLDER)
+
+
+@blueprint.route('/generate', methods=['GET', 'POST'])
+@login_required
+def to_rf_main():
+    _template_folder = BASE_DIR + "/generate/generate_template"
+    _upload_file_names = []
+    if "" == UPLOAD_FILE_NAME:
+        flash('Pls upload file!!!', 'warning')
+        return render_template("tools/upload.html")
+    elif "json" == UPLOAD_FILE_NAME[-4:]:
+        # 将postman导出的json文件转换成RF关键字
+        current_app.logger.info(
+            "in to_rf_main! UPLOAD_FILE_NAME=%s" %
+            UPLOAD_FILE_NAME)
+        # 已上传的postman脚本导出文件路径
+        pcj = UPLOAD_FOLDER + "/" + UPLOAD_FILE_NAME
+        # 生成RF关键字脚本存放目录
+        rfp = UPLOAD_FOLDER
+        # 生成rf关键字文件的模板文件
+        tfdn_kw = _template_folder + "/rf_template_kw.txt"
+        # 生成rf关键字模板文件中的settings模板
+        tfdn_settings = _template_folder + "/rf_template_kw_settings.txt"
+        grf = GenerateRF()
+        rf_file = grf.generate_rf_kw_from_postman(
+            pcj, tfdn_kw, tfdn_settings, rfp)
+        _mlist = rf_file.split('/')
+        rf_file_name = _mlist[len(_mlist) - 1]
+        _upload_file_names.append(rf_file_name)
+        shutil.copy(
+            rf_file,
+            "%s/%s.%s.bak" %
+            (ROOT_FOLDER,
+             rf_file_name,
+             time.strftime(
+                 '%Y%m%d%H%M%S',
+                 time.localtime(
+                     time.time()))))
+
+        # 将postman导出的json文件转换成与生成RF关键字相匹配的测试用例脚本
+        # 生成RF测试用例脚本文件的模板文件
+        tfdn_case = _template_folder + "/template_testcase.txt"
+        # 生成RF测试用例脚本文件模板文件中，变量定义的模板
+        tfdn_var = _template_folder + "/template_testcase_variables.txt"
+        rf_case_file = grf.generate_rf_case_from_postman(
+            pcj, tfdn_case, tfdn_settings, tfdn_var, rfp)
+        _mlist = rf_case_file.split('/')
+        rf_case_file_name = _mlist[len(_mlist) - 1]
+        _upload_file_names.append(rf_case_file_name)
+        shutil.copy(
+            rf_file,
+            "%s/%s.%s.bak" %
+            (ROOT_FOLDER,
+             rf_case_file_name,
+             time.strftime(
+                 '%Y%m%d%H%M%S',
+                 time.localtime(
+                     time.time()))))
+
+    # 显示出已生成文件名称
+    flash('Generate file %s successfully!!!' % ','.join(_upload_file_names), 'info')
+    # 转到上传、下载文件目录
+    # return tools_download(UPLOAD_FOLDER)
     return redirect(url_for('tools.tools_download'))

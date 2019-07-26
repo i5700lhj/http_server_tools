@@ -38,13 +38,20 @@ def home():
 def login():
     """login page."""
     form = LoginForm(request.form)
-    current_app.logger.info("Hello from the login page!")
+    current_app.logger.info(
+        "call login request method:%s, username :%s ." %
+        (request.method, form.data['username']))
     # Handle logging in
     if request.method == "POST":
         if form.validate_on_submit():
+            current_app.logger.info(
+                "login success. login user info:%s" %
+                form.user)
             login_user(form.user)
-            flash("You are logged in.", "success")
-            redirect_url = request.args.get("next") or url_for("user.members")
+            flash(
+                "Logged in success ! Welcome %s !" %
+                form.user.username, "success")
+            redirect_url = request.args.get("next") or url_for("tools.cards")
             return redirect(redirect_url)
         else:
             flash_errors(form)
@@ -57,7 +64,7 @@ def logout():
     """Logout."""
     logout_user()
     flash("You are logged out.", "info")
-    return redirect(url_for("public.home"))
+    return redirect(url_for("public.login"))
 
 
 @blueprint.route("/register/", methods=["GET", "POST"])
@@ -83,3 +90,16 @@ def about():
     """About page."""
     form = LoginForm(request.form)
     return render_template("public/about.html", form=form)
+
+
+@blueprint.route("/egg/")
+@login_required
+def egg():
+    """egg page."""
+    return render_template("public/egg.html")
+
+
+@blueprint.route("/demo-jquery-jbox")
+def demo():
+    """demo-jquery-jbox"""
+    return render_template("demo/demo-jquery-jbox.html")

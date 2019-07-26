@@ -1,0 +1,7 @@
+#API_NAME#
+    [Arguments]    ${host}    ${data}#args#
+    [Documentation]   #Documentation#
+    ${headers}    Create Dictionary    #headers#
+    Create Session    api    ${host}    ${headers}   verify=${False}
+    ${Ret}    #httpType#   api   #url#
+    [Return]    ${Ret}

@@ -1,0 +1,4 @@
+Suite Setup       Log    Suite Setup
+Suite Teardown    Log    Suite Teardown
+Test Setup        log    Test Setup
+Test Teardown     log    Teardown

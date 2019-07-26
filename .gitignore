@@ -1,3 +1,6 @@
 demo_cookiecutter/
 demo/flask_server_platform/
 http_server_tools/tmp/
+*.bak
+*.temp
+*.log

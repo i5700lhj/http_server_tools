@@ -1,0 +1,9 @@
+#CASE_NAME#_TestCase
+    [Tags]    #TAGS#
+    ${data}    Set Variable    #CASE_DATA#
+    ${exp_code}    Set Variable    #EXP_CODE#
+    ${exp_contain}    Set Variable    #EXP_CONTAIN#
+    ${Resp_data}    #API_KW#    ${VAR_HOST}    ${data}
+    Log    ${Resp_data.text}
+    Should Be Equal As Strings    ${Resp_data.status_code}    ${exp_code}
+    Should Contain    ${Resp_data.text}    ${exp_contain}
