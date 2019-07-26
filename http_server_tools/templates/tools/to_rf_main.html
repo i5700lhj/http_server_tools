@@ -3,20 +3,37 @@
 {% block title %}RobotFramework{% endblock %}
 
 {% block head %}
-  <meta charset="utf-8">
+<meta charset="utf-8">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style_hyperlink.css') }}">
+<style>
+    .main{
+    background: #fff;
+    width: 730px;
+    margin: 0 auto;
+    overflow: hidden;
+    padding: 10px;
+    }
+</style>
 
 {% endblock %}
 
 {% block main %}
-{% if current_user and current_user.is_authenticated %}
-    <h3 class="page-title">RobotFramework脚本转换工具</h3>
-{% else %}
-    <h3 class="page-title">请登录</h3>
-{% endif %}
+
+    <h3 style="text-align: center;">RobotFramework脚本转换工具</h3>
+
 <div class="main">
-  <div class="btn btn-secondary col-xl-12" >
-    <a href="{{ url_for('tools.to_rf_main') }}">Generate</a>
-  </div>
+    <div class="section__box" style="text-align: center;">
+        <br/>
+        <a href="{{ url_for('tools.to_rf_main') }}" class="r-link ai-element ai-element_padding-all ai-element5">
+            <span class="ai-element__label">Generate</span>
+        </a>
+    </div>
+
 </div>
+
+
+
+
+
 
 {% endblock %}

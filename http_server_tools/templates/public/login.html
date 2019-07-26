@@ -17,12 +17,14 @@
 
 
 <div class="login-main">
-
+    {% if current_user and current_user.is_authenticated %}
+    <h3 class="mt-5" style="text-align: center;">You are already login!</h3>
+    {% else %}
     <form class="form" id="loginForm" method="POST" action="/login/" role="login">
 
       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
       <div class="login-body">
-          <h1 class="mt-5">Login</h1>
+          <h1 class="mt-5" style="text-align: center;">Login</h1>
           <br/>
           <div class="form-group">
               {{form.username.label}}
@@ -36,6 +38,7 @@
         <button class="login-button" type="submit">Login</button>
       </div>
     </form>
+    {% endif %}
 </div>
 
 
