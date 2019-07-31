@@ -7,25 +7,34 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <meta name="generator" content="Bootstrap Listr">
+  <style>
+    .download-main{
+        background: #fff;
+        width: 1200px;
+        margin: 0 auto;
+        overflow: hidden;
+        padding: 10px;
+    }
+    .btn-secondary{
+        width: 80px;
+        color:#373a3c;background-color:#fff;border-color:#ccc
+    }
+  </style>
 
-  <link rel="stylesheet" href="{{url_for('static', filename='css/listr.pack.css')}}">
-  <link rel="stylesheet" href="{{url_for('static', filename='css/jquery.filer.css')}}">
+
 {% endblock %}
 
 {% block main %}
 {% if current_user and current_user.is_authenticated %}
-    <h3 class="page-title">RobotFramework脚本转换工具</h3>
+    <h3 class="page-title" style="text-align: center;">RobotFramework脚本转换工具</h3>
 {% else %}
     <h3 class="page-title">请登录</h3>
 {% endif %}
-<div class="container">
-  <div class="row">
-    <div class="pull-sm-left">
-        <div class="btn-group">
-          <a class="btn btn-secondary text-muted" href="{{ url_for('tools.upload_file') }}">Back</a>
-        </div>
-    </div>
+<div class="download-main">
+  <div>
+    <a class="btn btn-secondary" href="{{ url_for('tools.upload_file') }}">Back</a>
   </div>
+  <br/>
     <div class="table-responsive">
       <table id="listr-table" class="table table-hover">
         <thead>

@@ -99,7 +99,18 @@ def egg():
     return render_template("public/egg.html")
 
 
-@blueprint.route("/demo-jquery-jbox")
-def demo():
-    """demo-jquery-jbox"""
-    return render_template("demo/demo-jquery-jbox.html")
+@blueprint.route("/demo/<demo_id>")
+@login_required
+def demo(demo_id):
+    current_app.logger.info("demo_id:%s type:%s" % (demo_id, type(demo_id)))
+    """demo"""
+    if 'jquery-jbox' == demo_id:
+        return render_template("demo/demo-jquery-jbox.html")
+    elif 'ajax-login' == demo_id:
+        return render_template("demo/demo_ajax_login.html")
+    elif 'css3-hyperlink-animation' == demo_id:
+        return render_template("demo/demo-css3-hyperlink-animation.html")
+    elif 'circle-color-picker' == demo_id:
+        return render_template("demo/demo-circle-color-picker.html")
+    else:
+        return render_template("public/egg.html")
