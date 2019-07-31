@@ -29,6 +29,7 @@
                 <li>
                     <a href="{{ url_for('user.members') }}">{{ current_user.username }}</a>
                     <ul>
+                        <a href="{{ url_for('user.change_pwd') }}">Change Password</a>
                         <li><a href="{{ url_for('public.logout') }}">Logout</a></li>
                     </ul>
                 </li>
@@ -47,10 +48,11 @@
                         <li><a href="{{ url_for('public.demo', demo_id='css3-hyperlink-animation') }}">css3-hyperlink-animation</a></li>
                     </ul>
                 </li>
+                    {% if current_user.is_admin %}
+                    <li><a href="{{ url_for('public.register') }}">Register</a></li>
+                    {% endif %}
                 {% else %}
                 <li><a href="{{ url_for('public.login') }}">Login</a></li>
-                <li><a href="{{ url_for('public.register') }}">Register</a></li>
-
                 {% endif %}
                 <li><a href="{{ url_for('public.about') }}">About</a>
                     <ul>
