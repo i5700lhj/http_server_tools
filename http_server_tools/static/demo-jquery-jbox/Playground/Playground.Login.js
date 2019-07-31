@@ -23,7 +23,7 @@ var jBoxLogin = {
   // The html of each of the content containers
   
   html: {
-    login: '<script src="https://cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js"></script><div id="LoginContainer-login" class="login-container"><div class="login-body"><input type="text" id="loginUsername" class="login-textfield" placeholder="Username" autocorrect="off" autocapitalize="off" spellcheck="false"><input type="password" id="loginPassword" class="login-textfield" placeholder="Password" autocorrect="off" autocapitalize="off" spellcheck="false"><div class="login-remember"><div class="login-checkbox"><div class="login-checkbox-check"></div></div><div class="login-checkbox-label">Remember me</div><input type="hidden" name="login-remember" value="1"></div><button class="login-button">Login</button></div><div class="login-footer"><span onclick="jBoxLogin.jBox.showContent(\'register\')">Create new account</span><br><span style="display: none" onclick="jBoxLogin.jBox.showContent(\'password-recovery\')">Forgot password?</span></div></div>',
+    login: '<meta name="csrf-token" content="{{ csrf_token() }}"><div id="LoginContainer-login" class="login-container"><div class="login-body"><input type="text" id="loginUsername" class="login-textfield" placeholder="Username" autocorrect="off" autocapitalize="off" spellcheck="false"><input type="password" id="loginPassword" class="login-textfield" placeholder="Password" autocorrect="off" autocapitalize="off" spellcheck="false"><div class="login-remember"><div class="login-checkbox"><div class="login-checkbox-check"></div></div><div class="login-checkbox-label">Remember me</div><input type="hidden" name="login-remember" value="1"></div><button class="login-button">Login</button></div><div class="login-footer"><span onclick="jBoxLogin.jBox.showContent(\'register\')">Create new account</span><br><span style="display: none" onclick="jBoxLogin.jBox.showContent(\'password-recovery\')">Forgot password?</span></div></div>',
     // login: '<form class="form-container" id="loginForm" method="POST" action="/login/" role="login"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}" /><div class="input-group mb-2 mr-sm-2">{{ form.username(placeholder="Username", class_="form-control mr-sm-1 my-auto") }} {{ form.password(placeholder="Password",class_="form-control mr-sm-1 my-auto") }}<button class="btn btn-light btn-primary m-auto" type="submit">Login</button></div></form>'
     register: '<div id="LoginContainer-register" class="login-container"><div class="login-body"><input type="text" id="registerUsername" class="login-textfield" placeholder="Username" maxlength="24" autocorrect="off" autocapitalize="off" spellcheck="false"><input type="text" id="registerEmail" class="login-textfield" placeholder="Email address" maxlength="128" autocorrect="off" autocapitalize="off" spellcheck="false"><div class="login-textfield-wrapper"><input type="password" class="login-textfield" id="registerPassword" placeholder="Password" maxlength="32" autocorrect="off" autocapitalize="off" spellcheck="false"><div class="password-strength" style="display: none"></div></div><button class="login-button">Create account</button></div><div class="login-footer"><span onclick="jBoxLogin.jBox.showContent(\'login\')">Already registered? Login!</span></div></div>',
     passwordRecovery: '', // TODO '<div id="LoginContainer-password-recovery" class="login-container"><div class="login-body"><input type="text" class="login-textfield" placeholder="Email address" autocorrect="off" autocapitalize="off" spellcheck="false"><button class="login-button">Reset password</button></div><div class="login-footer"><span onclick="jBoxLogin.jBox.showContent(\'login\')">Already registered? Login!</span></div></div>',
@@ -236,23 +236,26 @@ $(document).ready(function() {
         $('#LoginWrapper button')[enable ? 'removeClass' : 'addClass']('loading-bar');
         $('#LoginWrapper input, #LoginWrapper button').attr('disabled', enable ? false : 'disabled');
       }.bind(this);
+
+
       
       // Bind ajax login function to login button
       $('#LoginContainer-login button').on('click', function () {
+        var csrftoken = $("meta[name=csrf-token]").attr("content");
         $.ajax({
           url: '/login/',
           dataType: "json",
+          // type: "post",
           data: {
+            csrf_token: '{{csrf_token()}}',
             username: $('#loginUsername').val(),
             password: $('#loginPassword').val(),
             remember: $('.login-checkbox').hasClass('login-checkbox-active') ? 1 : 0
           },
+          // headers:{"X-CSRFToken":csrftoken},
           method: 'post',
 
           beforeSend: function () {
-            var csrftoken = this.getCookie('session');
-            // var ggg = 'ggg'
-            this.globalError(csrftoken);
             this.startRequest();
           }.bind(this),
 
