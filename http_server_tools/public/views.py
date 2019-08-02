@@ -112,5 +112,11 @@ def demo(demo_id):
         return render_template("demo/demo-css3-hyperlink-animation.html")
     elif 'circle-color-picker' == demo_id:
         return render_template("demo/demo-circle-color-picker.html")
+    elif 'jquery-dropdown-contextmenu' == demo_id:
+        return render_template("demo/demo-jquery-dropdown-contextmenu.html")
+    elif 'html5-svg-weather-card' == demo_id:
+        return render_template("demo/demo-html5-svg-weather-card.html")
+    elif 'jquery-css3-animated-login' == demo_id:
+        return render_template("demo/demo-jquery-css3-animated-login.html")
     else:
         return render_template("public/egg.html")

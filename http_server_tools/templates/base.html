@@ -39,17 +39,25 @@
                         <li><a href="{{ url_for('tools.upload_file') }}">Generate Tool</a></li>
                     </ul>
                 </li>
-                <li>
-                    <a href="#">Demo</a>
-                    <ul>
-                        <li><a href="{{ url_for('public.demo', demo_id='circle-color-picker') }}">circle-color-picker</a></li>
-                        <li><a href="{{ url_for('public.demo', demo_id='jquery-jbox') }}">jquery-jbox</a></li>
-                        <li><a href="{{ url_for('public.demo', demo_id='ajax-login') }}">ajax-login</a></li>
-                        <li><a href="{{ url_for('public.demo', demo_id='css3-hyperlink-animation') }}">css3-hyperlink-animation</a></li>
-                    </ul>
-                </li>
                     {% if current_user.is_admin %}
-                    <li><a href="{{ url_for('public.register') }}">Register</a></li>
+                    <li>
+                        <a href="{{ url_for('console.home') }}">Console</a>
+                        <ul>
+                            <a href="{{ url_for('public.register') }}">Register</a>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">Demo</a>
+                        <ul>
+                            <li><a href="{{ url_for('public.demo', demo_id='ajax-login') }}">ajax-login</a></li>
+                            <li><a href="{{ url_for('public.demo', demo_id='circle-color-picker') }}">circle-color-picker</a></li>
+                            <li><a href="{{ url_for('public.demo', demo_id='css3-hyperlink-animation') }}">css3-hyperlink-animation</a></li>
+                            <li><a href="{{ url_for('public.demo', demo_id='html5-svg-weather-card') }}">html5-svg-weather-card</a></li>
+                            <li><a href="{{ url_for('public.demo', demo_id='jquery-css3-animated-login') }}">jquery-css3-animated-login</a></li>
+                            <li><a href="{{ url_for('public.demo', demo_id='jquery-dropdown-contextmenu') }}">jquery-dropdown-contextmenu</a></li>
+                            <li><a href="{{ url_for('public.demo', demo_id='jquery-jbox') }}">jquery-jbox</a></li>
+                        </ul>
+                    </li>
                     {% endif %}
                 {% else %}
                 <li><a href="{{ url_for('public.login') }}">Login</a></li>
