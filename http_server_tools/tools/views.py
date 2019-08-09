@@ -42,10 +42,11 @@ blueprint = Blueprint(
 BASE_DIR = str(os.path.dirname(os.path.dirname(__file__)))
 BASE_DIR = BASE_DIR.replace('\\', '/')
 
-ROOT_FOLDER = BASE_DIR + "/generate/history_files"
-UPLOAD_FOLDER = BASE_DIR + "/tmp"
+ROOT_FOLDER = BASE_DIR + "/generate/files"
+BACKUP_FOLDER = BASE_DIR + "/generate/files/backup"
 UPLOAD_FILE_NAME = ""
 CURRENT_FOLDER = ""
+
 
 @blueprint.route('/cards', methods=['GET', 'POST'])
 @login_required
@@ -56,7 +57,7 @@ def cards():
 @blueprint.route("/download", methods=["GET", "POST"])
 @blueprint.route("/<path:p>", methods=["GET", "POST"])
 @login_required
-def tools_download(p=UPLOAD_FOLDER):
+def tools_download(p=ROOT_FOLDER):
     current_app.logger.info("in get! method=%s" % request.method)
     hide_dotfile = request.args.get(
         'hide-dotfile',
@@ -186,6 +187,7 @@ def allowed_file(filename):
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
+# 删除指定目录下所有文件，子果有子目录，则递归删除所有子目录下文件
 def del_folder_files(path):
     ls = os.listdir(path)
     for i in ls:
@@ -196,11 +198,22 @@ def del_folder_files(path):
             os.remove(c_path)
 
 
+# 仅删除指定目录下所有文件，不涉及子目录
+def del_files(path):
+    ls = os.listdir(path)
+    for i in ls:
+        c_path = os.path.join(path, i)
+        if os.path.isdir(c_path):
+            pass
+        else:
+            os.remove(c_path)
+
+
 @blueprint.route('/upload', methods=['GET', 'POST'])
 @login_required
 def upload_file():
     # 进入上传文件界面，清理UPLOAD_FOLDER目录
-    del_folder_files(UPLOAD_FOLDER)
+    del_files(ROOT_FOLDER)
     if request.method == 'POST':
         # check if the post request has the file part
         if 'file' not in request.files:
@@ -218,7 +231,7 @@ def upload_file():
             # UPLOAD_FOLDER = './upload_dir/'
             # CreateNewDir()
             # global UPLOAD_FOLDER
-            file.save(os.path.join(UPLOAD_FOLDER, UPLOAD_FILE_NAME))
+            file.save(os.path.join(ROOT_FOLDER, UPLOAD_FILE_NAME))
             flash('Upload file %s SUCCESS !!!' % UPLOAD_FILE_NAME, 'success')
             return redirect(url_for('tools.uploaded_file',
                                     filename=UPLOAD_FILE_NAME))
@@ -232,6 +245,7 @@ def upload_file():
 def uploaded_file():
     # return redirect(url_for('tools.tools_download'))
     return render_template("tools/to_rf_main.html")
+
 
 @blueprint.route('/history', methods=['GET', 'POST'])
 @login_required
@@ -253,9 +267,9 @@ def to_rf_main():
             "in to_rf_main! UPLOAD_FILE_NAME=%s" %
             UPLOAD_FILE_NAME)
         # 已上传的postman脚本导出文件路径
-        pcj = UPLOAD_FOLDER + "/" + UPLOAD_FILE_NAME
+        pcj = ROOT_FOLDER + "/" + UPLOAD_FILE_NAME
         # 生成RF关键字脚本存放目录
-        rfp = UPLOAD_FOLDER
+        rfp = ROOT_FOLDER
         # 生成rf关键字文件的模板文件
         tfdn_kw = _template_folder + "/rf_template_kw.txt"
         # 生成rf关键字模板文件中的settings模板
@@ -269,7 +283,7 @@ def to_rf_main():
         shutil.copy(
             rf_file,
             "%s/%s.%s.bak" %
-            (ROOT_FOLDER,
+            (BACKUP_FOLDER,
              rf_file_name,
              time.strftime(
                  '%Y%m%d%H%M%S',
@@ -289,7 +303,7 @@ def to_rf_main():
         shutil.copy(
             rf_file,
             "%s/%s.%s.bak" %
-            (ROOT_FOLDER,
+            (BACKUP_FOLDER,
              rf_case_file_name,
              time.strftime(
                  '%Y%m%d%H%M%S',
@@ -297,7 +311,8 @@ def to_rf_main():
                      time.time()))))
 
     # 显示出已生成文件名称
-    flash('Generate file %s successfully!!!' % ','.join(_upload_file_names), 'info')
+    flash('Generate file %s successfully!!!' %
+          ','.join(_upload_file_names), 'info')
     # 转到上传、下载文件目录
     # return tools_download(UPLOAD_FOLDER)
     return redirect(url_for('tools.tools_download'))
