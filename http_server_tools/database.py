@@ -35,11 +35,16 @@ class CRUDMixin(object):
         db.session.delete(self)
         return commit and db.session.commit()
 
-    def exe(self, commit=True):
-        db.session.execute(self)
+    @classmethod
+    def query_all(cls, cmd):
+        return db.session.execute(cmd)
+
+    def exe(self, commit=True, exe_str=''):
+        db.session.execute(exe_str)
         if commit:
             db.session.commit()
         return self
+
 
 class Model(CRUDMixin, db.Model):
     """Base model class that includes CRUD convenience methods."""
