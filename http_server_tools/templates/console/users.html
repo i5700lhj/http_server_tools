@@ -1,0 +1,164 @@
+{% extends 'console/index.html' %}
+
+{% block head %}
+
+<style type="text/css">
+table {
+    margin:auto;
+    width: 60%;
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+table caption {
+    color: blue;
+    font: 34px consolas bold;
+}
+
+table th, table td {
+    border: 1px solid black;
+    text-align:center;
+}
+
+table th {
+    font: 20px consolas bold;
+    background-color: #616161;
+}
+
+table tr:nth-child(n+2){
+    background-color: #999999;
+}
+
+table tr:nth-child(2n+2)  {
+    background-color: #999999;
+}
+</style>
+
+{% endblock %}
+{% block main %}
+
+
+
+<script type="text/javascript">
+	var data = [
+    {id: "001", fullname: "张三", sex: "男", score: [98,33,48]},
+    {id: "002", fullname: "李四", sex: "w", score: [11,22,33]},
+    {id: "003", fullname: "kyo", sex: "m", score: [22,33,55]},
+    {id: "004", fullname: "yamazaki", sex: "w", score: [99, 100, 80]}
+];
+	//
+    var ls_users = "{{ l_users }}".split("),");
+
+
+var Student = function (id, fullname, sex, score)
+{
+    this.id = id;
+    this.fullname = fullname;
+    this.sex = sex;
+    this.score = score;
+}
+
+var Users = function (id, username, email, created_at, active, is_admin)
+{
+	var tmp = id.replace("[","")
+	var t_id = tmp.replace("(","")
+	this.id = t_id;
+	this.username = username;
+	this.email = email;
+	this.created_at = created_at;
+	if (1 == active)
+	{
+		this.active = "是";
+	}
+	else if (0 == active)
+	{
+		this.active = "否";
+	}
+	else
+	{
+		this.active = active;
+	}
+	var tmp = is_admin.replace("]","")
+	var t_is_admin = tmp.replace(")","")
+	if (1 == t_is_admin)
+	{
+		this.is_admin = "是";
+	}
+	else if (0 == t_is_admin)
+	{
+		this.is_admin = "否";
+	}
+	else
+	{
+		this.is_admin = t_is_admin;
+	}
+
+}
+
+var Score = function (chinese, math, english)
+{
+    this.chinese = chinese;
+    this.math = math;
+    this.english = english;
+}
+
+var students = [];
+/*
+for (var i = 0; i < data.length; i++)
+{
+    var d = data[i];
+    var s = d["score"];
+    students.push(new Student (d["id"], d["fullname"], d["sex"], new Score(s[0], s[1], s[2])));
+}
+*/
+for (var i = 0; i < {{ num }}; i++)
+{
+    var d = ls_users[i];
+    var ld = d.split(",");
+    students.push(new Users (ld[0], ld[1], ld[2], ld[4], ld[7], ld[8]));
+}
+
+onload = function ()
+{
+    var table = document.createElement("table");
+    var tbody = document.createElement("tbody");
+    table.appendChild(tbody);
+    var caption = table.createCaption();
+    caption.innerHTML = "用户信息";
+    var tr = tbody.insertRow (0);
+    var str = "id,username,email,created_at,active,is_admin".split(",");
+    for (var i = 0; i < str.length; i++)
+    {
+        var th = document.createElement("th");
+        th.innerHTML = str[i];
+        tr.appendChild (th);
+    }
+    for (var i = 0; i < students.length; i++)
+    {
+        var tr = tbody.insertRow (tbody.rows.length);
+        var obj = students[i];
+        for (var p in obj)
+        {
+            var op = obj[p];
+            if (p != "score")
+            {
+                var td = tr.insertCell (tr.cells.length);
+                td.innerHTML = op;
+            }
+            else
+            {
+                for (var p in op)
+                {
+                    var td = tr.insertCell (tr.cells.length);
+                    td.innerHTML = op[p];
+                }
+            }
+        }
+    }
+    document.body.appendChild(table);
+}
+
+</script>
+
+{% endblock %}
+

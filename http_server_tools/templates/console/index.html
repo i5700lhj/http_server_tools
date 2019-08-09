@@ -2,20 +2,9 @@
 <html>
 <head>
 <meta charset="utf-8" />
-<title>jQuery左侧边栏多级菜单DEMO演示</title>
+<title>后台管理</title>
 	{% block head %}{% endblock %}
-	<style>
-    *, *:before, *:after {
-    box-sizing: border-box;
-    }
-    body {
-      margin: 0;
-      padding: 0;
-      height: 100vh;
-      background-color: #ecf0f9;
-      background-attachment: fixed;
-    }
-    </style>
+
 </head>
 
 <!--图标样式-->
@@ -28,18 +17,19 @@
 	<ul>
 		<!--这部分是导航栏信息。-->
 		<li class="s-firstItem first">
-			<a href="#">
+			<a href="{{ url_for('console.home') }}">
 				<i class="fa fa-home"></i>
-				<span>首页</span>
+				<span>后台管理</span>
 			</a>
 		</li>
-		
+		<!--   --三级菜单例子--
 		<li class="first">
 			<div class="d-firstNav s-firstNav clearfix">
 				<i class="fa fa-bars"></i>
 				<span>一级菜单</span>
 				<i class="fa fa-caret-right fr "></i>
 			</div>
+
 			<ul class="d-firstDrop s-firstDrop">
 				<li>
 					<div class="d-secondNav s-secondNav">
@@ -76,22 +66,28 @@
 				</li>
 			</ul>
 		</li>
+		-->
 		<li class="first">
 			<div class="d-firstNav s-firstNav">
 				<i class="fa fa-bars"></i>	                    
-				<span>一级菜单</span>
+				<span>权限管理</span>
 				<i class="fa fa-caret-right fr" ></i>
 			</div>
 			<ul class="d-firstDrop s-firstDrop">
 				<li class="s-secondItem">
 					<i class="fa fa-minus-square-o"></i>
-					<a href="#">二级导航</a>
+					<a href="{{ url_for('console.users') }}">用户信息</a>
 				</li>
 				<li class="s-secondItem">
 					<i class="fa fa-minus-square-o"></i>
-					<a href="#">二级导航</a>
+					<a href="{{ url_for('console.users_manage') }}">用户管理</a>
 				</li>
 			</ul>
+		</li>
+		<li class="first">
+			<div class="d-firstNav s-firstNav">
+				<span><a href="{{ url_for('tools.cards') }}">返回</a></span>
+			</div>
 		</li>
 	</ul>
 </div>

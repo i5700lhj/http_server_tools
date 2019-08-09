@@ -1,0 +1,313 @@
+{% extends 'console/index.html' %}
+
+{% block head %}
+<meta charset="utf-8" />
+<meta name="renderer" content="webkit" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="format-detection" content="telephone=no" />
+<title>基于Layui的可自定义添加删除数据的表格DEMO演示</title>
+
+<link rel="stylesheet" href="/static/layui-table-data/css/layui.css" />
+<!--[if lt IE 9]>
+<script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+<script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+<style type="text/css">
+	/*您可以将下列样式写入自己的样式表中*/
+	.childBody{padding: 15px;}
+	
+	/*layui 元素样式改写*/
+	.layui-btn-sm{line-height: normal; font-size: 12.5px;}		
+	.layui-table-view .layui-table-body{min-height: 256px;}
+	.layui-table-cell .layui-input.layui-unselect{height: 30px; line-height: 30px;}
+	
+	/*设置 layui 表格中单元格内容溢出可见样式*/
+	.table-overlay .layui-table-view,
+	.table-overlay .layui-table-box,
+	.table-overlay .layui-table-body{overflow: visible;}
+	.table-overlay .layui-table-cell{height: auto; overflow: visible;}
+	
+	/*文本对齐方式*/
+	.text-center{text-align: center;}
+</style>
+
+{% endblock %}
+{% block main %}
+
+<div style="text-align:center;clear:both;">
+<script src="/gg_bd_ad_720x90.js" type="text/javascript"></script>
+<script src="/follow.js" type="text/javascript"></script>
+</div>
+<br/>
+<section class="layui-col-md8" style="margin: 0 auto; float: none;">
+	<div class="layui-card">
+		<div class="layui-card-header">用户管理</div>
+		<div class="layui-card-body layui-text">
+			<div id="toolbar">
+				<div>
+					<button type="button" class="layui-btn layui-btn-sm" data-type="addRow" title="批量新增">
+						<i class="layui-icon layui-icon-add-1"></i> 批量新增
+					</button>					
+				</div>
+			</div>
+			<div id="tableRes" class="table-overlay">
+				<table id="dataTable" lay-filter="dataTable" class="layui-hide"></table>
+			</div>
+			<div id="action" class="text-center">
+				<button type="button" name="btnSave" class="layui-btn" data-type="save"><i class="layui-icon layui-icon-ok-circle"></i>提交</button>
+				<button type="reset" name="btnReset" class="layui-btn layui-btn-primary" onClick="JavaScript :location.replace(location.href);">取消</button>
+			</div>
+		</div>
+	</div>
+	
+	<!--保存结果输出-->		
+	<div class="layui-card">
+		<div class="layui-card-header">操作日志</div>
+		<div class="layui-card-body layui-text">						
+			<blockquote class="layui-elem-quote layui-quote-nm">
+				<pre id="jsonResult"><span class="layui-word-aux">点击“提交”后查看输出日志信息……</span></pre>
+			</blockquote>
+		</div>
+	</div>
+</section>
+<!--recommended script position-->
+<script src="/static/layui-table-data/layui.js?v=201805080202" charset="utf-8"></script>
+<script type="text/javascript">
+	//处理后台数据
+	var ls_users = "{{ l_users }}".split("),");
+	var Users = function (id, username, email, created_at, active, is_admin)
+	{
+		var tmp = id.replace("[","")
+		var t_id = tmp.replace("(","")
+		this.id = t_id;
+
+		var tmp = username.replace("&#39;","");
+		var t_username = tmp.replace("&#39;","");
+		this.username = t_username;
+
+		var tmp = email.replace("&#39;","");
+		var t_email = tmp.replace("&#39;","");
+		this.email = t_email;
+
+		var tmp = created_at.replace("&#39;","");
+		var t_created_at = tmp.replace("&#39;","");
+		this.created_at = t_created_at;
+
+		this.active = active;
+
+		var tmp = is_admin.replace("]","");
+		var t_is_admin = tmp.replace(")","");
+		this.is_admin = t_is_admin;
+
+		this.tempId = new Date().valueOf();
+	}
+	var users = [];
+	for (var i = 0; i < {{ num }}; i++)
+	{
+		var d = ls_users[i];
+		var ld = d.split(",");
+		users.push(new Users (ld[0], ld[1], ld[2], ld[4], ld[7], ld[8]));
+	}
+	//准备视图对象
+	window.viewObj = {
+	tbData: [{
+				// id: "{{ l_users[0][0] }}",
+				name: "{{ l_users[0][1] }}",
+				email: "{{ l_users[0][2] }}",
+				created_at: "{{ l_users[0][4] }}",
+				active: {{ l_users[0][7] }},
+				is_admin: {{ l_users[0][8] }},
+				tempId: new Date().valueOf()
+			 }],
+		typeData: [
+			{id: 1, name: '分类一'},
+			{id: 2, name: '分类二'},
+			{id: 3, name: '分类三'},
+			{id: 4, name: '分类四'}
+		],
+		renderSelectOptions: function(data, settings){
+			settings =  settings || {};
+			var valueField = settings.valueField || 'value',
+				textField = settings.textField || 'text',
+				selectedValue = settings.selectedValue || "";
+			var html = [];
+			for(var i=0, item; i < data.length; i++){
+				item = data[i];
+				html.push('<option value="');
+				html.push(item[valueField]);
+				html.push('"');
+				if(selectedValue && item[valueField] == selectedValue ){						
+					html.push(' selected="selected"');
+				}			
+				html.push('>');		
+				html.push(item[textField]);
+				html.push('</option>');
+			}
+			return html.join('');
+		}
+	};
+	
+	//layui 模块化引用
+	layui.use(['jquery', 'table', 'layer'], function(){
+		var $ = layui.$, table = layui.table, form = layui.form, layer = layui.layer;
+					
+		//数据表格实例化			
+		var tbWidth = $("#tableRes").width();
+		var layTableId = "layTable";
+		var tableIns = table.render({
+			elem: '#dataTable',
+			id: layTableId,
+			// data: viewObj.tbData,
+			data: users,
+			width: tbWidth,
+			page: true,
+			loading: true,
+			even: false, //不开启隔行背景
+			cols: [[
+				{title: '序号', type: 'numbers'},
+				/*
+				{field: 'type', title: '分类（type）', templet: function(d){
+					var options = viewObj.renderSelectOptions(viewObj.typeData, {valueField: "id", textField: "name", selectedValue: d.type});
+					return '<a lay-event="type"></a><select name="type" lay-filter="type"><option value="">请选择分类</option>' + options + '</select>';
+				}},
+				*/
+				{field: 'username', title: 'username', edit: 'text'},
+				{field: 'email', title: 'email', edit: 'text'},
+				// {field: 'created_at', title: 'created_at', edit: ''},
+				{field: 'active', title: 'active', event: 'state', templet: function(d){
+					var html = ['<input type="checkbox" name="active" lay-skin="switch" lay-text="是|否"'];
+					html.push(d.active > 0 ? ' checked' : '');
+					html.push('>');
+					return html.join('');
+				}},
+				{field: 'is_admin', title: 'is_admin', event: 'state', templet: function(d){
+					var html = ['<input type="checkbox" name="is_admin" lay-skin="switch" lay-text="是|否"'];
+					html.push(d.is_admin > 0 ? ' checked' : '');
+					html.push('>');
+					return html.join('');
+				}},
+				{field: 'tempId', title: '操作', templet: function(d,layTableId){
+					var test = viewObj.tbData
+					return '<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" lay-id="'+ d.tempId +'"><i class="layui-icon layui-icon-delete"></i>删除</a><form id="registerForm" class="form" method="POST" action="" role="form">{{ form.csrf_token }}<input type="text" name="operate" value="update" hidden><input type="text" name="username" value="'+ d.username +'" hidden><input type="text" name="email" value="'+ d.email +'" hidden><p><input class="layui-btn layui-btn-xs layui-btn-danger" type="submit" value="删除" onclick="JavaScript :alert("我是对话框的内容");"></p></form>';
+				}}
+			]],
+			done: function(res, curr, count){
+				viewObj.tbData = res.data;
+			}
+		});
+		
+		//定义事件集合
+		var active = {
+			addRow: function(){	//批量新增用户
+				var oldData = table.cache[layTableId];
+				console.log(oldData);
+				var newRow = {tempId: new Date().valueOf(), type: null, name: '请填写名称', state: 0};
+				oldData.push(newRow);
+				tableIns.reload({
+					data : oldData
+				});
+			},
+			updateRow: function(obj){
+				var oldData = table.cache[layTableId];				
+				console.log(oldData);
+				for(var i=0, row; i < oldData.length; i++){
+					row = oldData[i];
+					if(row.tempId == obj.tempId){
+						$.extend(oldData[i], obj);
+						return;
+					}
+				}
+				tableIns.reload({
+					data : oldData
+				});
+			},
+			removeEmptyTableCache: function(){
+				var oldData = table.cache[layTableId];		
+				for(var i=0, row; i < oldData.length; i++){
+					row = oldData[i];
+					if(!row || !row.tempId){
+						oldData.splice(i, 1);    //删除一项
+					}
+					continue;
+				}
+				tableIns.reload({
+					data : oldData
+				});
+			},
+			save: function(){
+				var oldData = table.cache[layTableId];	
+				console.log(oldData);	
+				for(var i=0, row; i < oldData.length; i++){
+					row = oldData[i];
+					/*
+					if(!row.type){
+						layer.msg("检查每一行，请选择分类！", { icon: 5 }); //提示
+						return;
+					}
+					*/
+				}
+				document.getElementById("jsonResult").innerHTML = JSON.stringify(table.cache[layTableId], null, 2);	//使用JSON.stringify() 格式化输出JSON字符串		
+			}
+		}
+		
+		//激活事件
+		var activeByType = function (type, arg) {
+			if(arguments.length === 2){					
+				active[type] ? active[type].call(this, arg) : '';
+			}else{
+				active[type] ? active[type].call(this) : '';
+			}
+		}
+		
+		//注册按钮事件
+		$('.layui-btn[data-type]').on('click', function () {
+			var type = $(this).data('type');
+			activeByType(type);
+		});
+		
+		//监听select下拉选中事件
+		form.on('select(type)', function(data){
+			var elem = data.elem; //得到select原始DOM对象
+			$(elem).prev("a[lay-event='type']").trigger("click");
+		});
+		
+		 //监听工具条
+		table.on('tool(dataTable)', function (obj) {
+			var data = obj.data, event = obj.event, tr = obj.tr; //获得当前行 tr 的DOM对象;
+			console.log(data);
+			switch(event){
+				case "type":
+					//console.log(data);
+					var select = tr.find("select[name='type']");
+					if(select){						
+						var selectedVal = select.val();
+						if(!selectedVal){
+							layer.tips("请选择一个分类", select.next('.layui-form-select'), { tips: [3, '#FF5722'] }); //吸附提示
+						}
+						console.log(selectedVal);
+						$.extend(obj.data, {'type': selectedVal});
+						activeByType('updateRow', obj.data);	//更新行记录对象
+					}
+					break;
+				case "state":
+					var stateVal = tr.find("input[name='state']").prop('checked') ? 1 : 0;
+					$.extend(obj.data, {'state': stateVal})	
+					activeByType('updateRow', obj.data);	//更新行记录对象
+					break;						
+				case "del":
+					layer.confirm('<span style="color: #393939">真的删除行么？</span>', function(index){
+					  obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+					  layer.close(index);
+					  activeByType('removeEmptyTableCache');
+					});
+					break;						
+			}
+		});
+	});
+</script>
+
+{% endblock %}
+
