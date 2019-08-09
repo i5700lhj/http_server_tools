@@ -4,3 +4,4 @@ http_server_tools/tmp/
 *.bak
 *.temp
 *.log
+tmp/*.db
