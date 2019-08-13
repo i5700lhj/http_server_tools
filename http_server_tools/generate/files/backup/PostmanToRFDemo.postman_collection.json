@@ -1,0 +1,252 @@
+{
+	"info": {
+		"_postman_id": "66d727d7-ff8f-40ae-b67c-b381d1524cc6",
+		"name": "PostmanToRFDemo",
+		"description": "Postman脚本转换为RF关键字脚本的例子",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "DemoGet-Params",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "cbaf6665-1c51-4536-bdf6-1ed3574467d5",
+						"exec": [
+							"tests[\"RF Should Be Equal As Strings\"] = responseCode.code === 200;",
+							"tests[\"RF Should Contain\"] = responseBody.has(\"\\\"positionId\\\":1155\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Session-Id",
+						"value": "4668844"
+					},
+					{
+						"key": "User-Id",
+						"value": "55441701"
+					},
+					{
+						"key": "Peer-Id",
+						"value": "4efb29b4b6442be50410fd499b9f20de"
+					},
+					{
+						"key": "idfa",
+						"value": "209090da78d"
+					},
+					{
+						"key": "IMEI",
+						"value": "78728a99d222939"
+					},
+					{
+						"key": "Product-Id",
+						"value": "31"
+					},
+					{
+						"key": "Version-Code",
+						"value": "5390"
+					},
+					{
+						"key": "Version-Name",
+						"value": "5.17.12.4000"
+					},
+					{
+						"key": "Mobile-Type",
+						"value": "android"
+					},
+					{
+						"key": "App-Type",
+						"value": "android"
+					},
+					{
+						"key": "Platform-Version",
+						"value": "9.3.1"
+					},
+					{
+						"key": "Channel",
+						"value": "0x10800001"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"url": {
+					"raw": "http://test.api-shoulei-ssl.xunlei.com/api/adp/get?positionId=1155&appId=1&callId=1488306777811&v=1.0&sign=b9cb78da9ea7dfc27e9cd9df83c91007&isAll=1&nosign=1",
+					"protocol": "http",
+					"host": [
+						"test",
+						"api-shoulei-ssl",
+						"xunlei",
+						"com"
+					],
+					"path": [
+						"api",
+						"adp",
+						"get"
+					],
+					"query": [
+						{
+							"key": "positionId",
+							"value": "1155"
+						},
+						{
+							"key": "appId",
+							"value": "1"
+						},
+						{
+							"key": "callId",
+							"value": "1488306777811"
+						},
+						{
+							"key": "v",
+							"value": "1.0"
+						},
+						{
+							"key": "sign",
+							"value": "b9cb78da9ea7dfc27e9cd9df83c91007"
+						},
+						{
+							"key": "isAll",
+							"value": "1"
+						},
+						{
+							"key": "nosign",
+							"value": "1"
+						}
+					]
+				},
+				"description": "【功能】   这里填写接口说明，必须按此格式填写\r\n    ...\r\n    ...    【参数】\r\n    ...\r\n    ...    【返回值】\r\n    ..."
+			},
+			"response": []
+		},
+		{
+			"name": "DemoPost-Body-FormUrlencoded",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "31e510e2-5080-4c92-8e15-a864e7203bb8",
+						"exec": [
+							"tests[\"RF Should Be Equal As Strings\"] = responseCode.code === 200;",
+							"tests[\"RF Should Contain\"] = responseBody.has(\"\\\"return\\\":0\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "v",
+							"value": "1.0",
+							"type": "text"
+						},
+						{
+							"key": "appId",
+							"value": "17",
+							"type": "text"
+						},
+						{
+							"key": "callId",
+							"value": "1477921589127",
+							"type": "text"
+						},
+						{
+							"key": "sig",
+							"value": "a21a7c959921f86476917bfc0f799c35",
+							"type": "text"
+						},
+						{
+							"key": "appIds",
+							"value": "19",
+							"type": "text"
+						},
+						{
+							"key": "nosign",
+							"value": "1",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://test.api-shoulei-ssl.xunlei.com/api/adp/reloadApp",
+					"protocol": "http",
+					"host": [
+						"test",
+						"api-shoulei-ssl",
+						"xunlei",
+						"com"
+					],
+					"path": [
+						"api",
+						"adp",
+						"reloadApp"
+					]
+				},
+				"description": "【功能】   这里填写接口说明，必须按此格式填写\r\n    ...\r\n    ...    【参数】\r\n    ...\r\n    ...    【返回值】\r\n    ..."
+			},
+			"response": []
+		},
+		{
+			"name": "DemoPost-Body-FormRawJson",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9b5fc80b-6d52-4cd2-9275-eaa9e079fb3e",
+						"exec": [
+							"tests[\"RF Should Be Equal As Strings\"] = responseCode.code === 200;",
+							"tests[\"RF Should Contain\"] = responseBody.has(\"\\\"account\\\":\\\"199133\\\"\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"protocolVersion\": \"200\",\r\n  \"sequenceNo\": \"123456\",\r\n  \"platformVersion\": \"0\",\r\n  \"isCompressed\": \"1\",\r\n  \"userName\": \"xlchannel\",\r\n  \"businessType\": \"0\",\r\n  \"clientVersion\": \"0\",\r\n  \"passWord\": \"123456qq\",\r\n  \"peerID\": \"2F9710AFECEE49207339AB91FF059F00\",\r\n  \"verifyKey\": \"\",\r\n  \"verifyCode\": \"\",\r\n  \"appName\": \"PC-com.xunlei.thunder\",\r\n  \"sdkVersion\": \"<center>nginx/1.2.2</center>\",\r\n  \"devicesign\": \"div101.4fa0e1e00c4c0f29e60461cf84fcf70be0f65ef30eeb46fd452fedbe98e8ed4e\",\r\n  \"deviceName\":\"deviceName\",\r\n  \"deviceModel\":\"deviceModel\",\r\n  \"OSVersion\":\"OSVersion\"\r\n}"
+				},
+				"url": {
+					"raw": "https://mobile-login.xunlei.com/login",
+					"protocol": "https",
+					"host": [
+						"mobile-login",
+						"xunlei",
+						"com"
+					],
+					"path": [
+						"login"
+					]
+				},
+				"description": "【功能】   这里填写接口说明，必须按此格式填写\r\n    ...\r\n    ...    【参数】\r\n    ...\r\n    ...    【返回值】\r\n    ..."
+			},
+			"response": []
+		}
+	]
+}

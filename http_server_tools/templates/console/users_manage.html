@@ -76,6 +76,21 @@
 <!--recommended script position-->
 <script src="/static/layui-table-data/layui.js?v=201805080202" charset="utf-8"></script>
 <script type="text/javascript">
+	//表格操作，确认提交处理
+	function validateForm() {
+		var r=confirm("真的删除么？");
+		/*
+		if (r==true)
+		  {
+		  alert("You pressed OK!");
+		  }
+		else
+		  {
+		  alert("You pressed Cancel!");
+		  }
+		 */
+		  return r;
+	}
 	//处理后台数据
 	var ls_users = "{{ l_users }}".split("),");
 	var Users = function (id, username, email, created_at, active, is_admin)
@@ -191,7 +206,7 @@
 				}},
 				{field: 'tempId', title: '操作', templet: function(d,layTableId){
 					var test = viewObj.tbData
-					return '<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" lay-id="'+ d.tempId +'"><i class="layui-icon layui-icon-delete"></i>删除</a><form id="registerForm" class="form" method="POST" action="" role="form">{{ form.csrf_token }}<input type="text" name="operate" value="update" hidden><input type="text" name="username" value="'+ d.username +'" hidden><input type="text" name="email" value="'+ d.email +'" hidden><p><input class="layui-btn layui-btn-xs layui-btn-danger" type="submit" value="删除" onclick="JavaScript :alert("我是对话框的内容");"></p></form>';
+					return '<form id="registerForm" class="form" method="POST" action="" role="form"  onsubmit="return validateForm()">{{ form.csrf_token }}<input type="text" name="operate" value="update" hidden><input type="text" name="username" value="'+ d.username +'" hidden><input type="text" name="email" value="'+ d.email +'" hidden><p><input class="layui-btn layui-btn-xs layui-btn-danger " type="submit" value="删除"></p></form>';
 				}}
 			]],
 			done: function(res, curr, count){
