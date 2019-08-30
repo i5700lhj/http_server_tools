@@ -57,10 +57,26 @@ def users():
 def users_manage():
     """console users manger page."""
     form = ChangePwdForm(request.form)
-    current_app.logger.info("users_manage() request.method: %s", request.method)
+    current_app.logger.info(
+        "users_manage() request.method: %s",
+        request.method)
     # 处理表单请求
     if request.method == 'POST':
-        current_app.logger.info("users_manage() request.form: %s", request.form)
+        current_app.logger.info(
+            "users_manage() request.form: %s",
+            request.form)
+        current_app.logger.info(
+            "users_manage() request.form['username']:%s, request.form['operate']:%s" %
+            (request.form['username'].replace(' ', ''), request.form['operate']))
+        # current_app.logger.info("users_manage() request.form['username'] type:%s", type(request.form['username']))
+        user = User.query.filter_by(
+            username=request.form['username'].replace(
+                ' ', '')).first()
+        # current_app.logger.info("users_manage() user:%s", user)
+        # jet是管理员用户，不能删除
+        if ("delete" == request.form['operate']) and (
+                "jet" != request.form['username'].replace(' ', '')):
+            user.delete()
         return redirect(url_for('console.users_manage'))
     # 获取数据库中users表数据并展示
     l_users = []

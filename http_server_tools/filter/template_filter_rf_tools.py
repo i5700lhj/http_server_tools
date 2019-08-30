@@ -2,16 +2,16 @@ import humanize
 from datetime import datetime
 
 icontypes = {'fa-music': 'm4a,mp3,oga,ogg,webma,wav', 'fa-archive': '7z,zip,rar,gz,tar',
-             'fa-picture-o': 'gif,ico,jpe,jpeg,jpg,png,svg,webp', 'fa-file-text': 'pdf',
+             'fa-picture-o': 'gif,ico,jpe,jpeg,jpg,png,svg,webp', 'fa-file-text': 'pdf,robot',
              'fa-film': '3g2,3gp,3gp2,3gpp,mov,qt',
              'fa-code': 'atom,plist,bat,bash,c,cmd,coffee,css,hml,js,json,java,less,markdown,md,php,pl,py,rb,rss,sass,scpt,swift,scss,sh,xml,yml',
-             'fa-file-text-o': 'txt', 'fa-film': 'mp4,m4v,ogv,webm', 'fa-globe': 'htm,html,mhtm,mhtml,xhtm,xhtml'}
+             'fa-file-text-o': 'txt,bak', 'fa-film': 'mp4,m4v,ogv,webm', 'fa-globe': 'htm,html,mhtm,mhtml,xhtm,xhtml'}
 
 datatypes = {'audio': 'm4a,mp3,oga,ogg,webma,wav', 'archive': '7z,zip,rar,gz,tar',
              'image': 'gif,ico,jpe,jpeg,jpg,png,svg,webp', 'pdf': 'pdf',
              'quicktime': '3g2,3gp,3gp2,3gpp,mov,qt',
-             'source': 'atom,bat,bash,c,cmd,coffee,css,hml,js,json,java,less,markdown,md,php,pl,py,rb,rss,sass,scpt,swift,scss,sh,xml,yml,plist',
-             'text': 'txt', 'video': 'mp4,m4v,ogv,webm',
+             'source': 'atom,bat,bash,c,cmd,coffee,css,hml,js,json,robot,java,less,markdown,md,php,pl,py,rb,rss,sass,scpt,swift,scss,sh,xml,yml,plist',
+             'text': 'txt,bak', 'video': 'mp4,m4v,ogv,webm',
              'website': 'htm,html,mhtm,mhtml,xhtm,xhtml'}
 
 

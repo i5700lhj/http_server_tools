@@ -7,6 +7,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <meta name="generator" content="Bootstrap Listr">
+  <!-- 将上传下载例子css/listr.pack中定义的下载文件图标资源提取出来，单独使用-->
+  <link rel="stylesheet" href="{{url_for('static', filename='css/listr.pack.icon.css')}}">
   <style>
     .download-main{
         background: #fff;
@@ -36,7 +38,9 @@
   </div>
   <br/>
     <div class="table-responsive">
+
       <table id="listr-table" class="table table-hover">
+
         <thead>
           <tr>
             <th class="text-xs-left " data-sort="string">Name</th>
@@ -75,15 +79,16 @@
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
+
             <button type="button" class="close pull-xs-right" data-dismiss="modal" aria-hidden="true">&times;</button>
             <h4 class="modal-title text-left" id="file-name">&nbsp;</h4>
             <small class="text-muted" id="file-meta"></small>
+            <a href="#" class="fullview" download><u>Download</u></a>
           </div>
+
           <div class="modal-body"></div>
+          <!--
           <div class="modal-footer">
-            <div class="pull-xs-left">
-              <button type="button" class="btn btn-link highlight hidden-xs-up">Apply syntax highlighting</button>
-            </div>
             <div class="pull-xs-right">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
@@ -92,6 +97,7 @@
                 </div>
               </div>
             </div>
+            -->
           </div>
         </div>
       </div>

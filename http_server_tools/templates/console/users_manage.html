@@ -206,7 +206,7 @@
 				}},
 				{field: 'tempId', title: '操作', templet: function(d,layTableId){
 					var test = viewObj.tbData
-					return '<form id="registerForm" class="form" method="POST" action="" role="form"  onsubmit="return validateForm()">{{ form.csrf_token }}<input type="text" name="operate" value="update" hidden><input type="text" name="username" value="'+ d.username +'" hidden><input type="text" name="email" value="'+ d.email +'" hidden><p><input class="layui-btn layui-btn-xs layui-btn-danger " type="submit" value="删除"></p></form>';
+					return '<form id="registerForm" class="form" method="POST" action="" role="form"  onsubmit="return validateForm()">{{ form.csrf_token }}<input type="text" name="operate" value="delete" hidden><input type="text" name="username" value="'+ d.username +'" hidden><input type="text" name="email" value="'+ d.email +'" hidden><p><input class="layui-btn layui-btn-xs layui-btn-danger " type="submit" value="删除"></p></form>';
 				}}
 			]],
 			done: function(res, curr, count){
