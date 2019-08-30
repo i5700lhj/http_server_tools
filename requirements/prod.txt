@@ -42,3 +42,4 @@ environs==4.0.0
 # Tools
 xlrd==1.2.0
 humanize=0.5.1
+flask-restful=0.3.7
