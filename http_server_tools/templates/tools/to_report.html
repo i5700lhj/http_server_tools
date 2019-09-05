@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}Report tools{% endblock %}
+
+{% block head %}
+<meta charset="utf-8">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style_hyperlink.css') }}">
+<style>
+    .main{
+    background: #fff;
+    width: 730px;
+    margin: 0 auto;
+    overflow: hidden;
+    padding: 10px;
+    }
+</style>
+
+{% endblock %}
+
+{% block main %}
+
+    <h3 style="text-align: center;">测试报告生成工具</h3>
+
+<div class="main">
+    <form class="form" id="reportForm" method="POST" action="" role="">
+
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+      <div class="login-body">
+          <div class="form-group">
+              {{form.hostname.label}}
+              {{ form.hostname(placeholder="Input prometheus's host name. E.g: 47.107.12.216:9090", class_="form-control") }}
+          </div>
+          <div class="form-group">
+              {{form.podname.label}}
+              {{ form.podname(placeholder="Input pod name. E.g: gateway-pay-release-858b784fc-rpq89", class_="form-control") }}
+          </div>
+          <div class="form-group">
+              {{form.metricname.label}}
+              {{ form.metricname(placeholder="Input metric name. E.g: process_cpu_seconds_total", class_="form-control") }}
+          </div>
+          <div class="form-group">
+              {{form.queryperiod.label}}
+              {{ form.queryperiod(placeholder="Input query period. E.g: 3m", class_="form-control") }}
+          </div>
+          <div class="form-group">
+              <button id="btn" class="" type="submit">Generate report</button>
+          </div>
+      </div>
+    </form>
+    <a href="{{ url_for('report.history') }}"><u>History</u></a>
+
+</div>
+
+
+
+
+
+
+{% endblock %}

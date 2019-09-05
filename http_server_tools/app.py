@@ -16,7 +16,7 @@ from flask_restful import Api
 
 
 from http_server_tools.api import TodoList, Todo, TaskList
-from http_server_tools import commands, public, user, tools, console
+from http_server_tools import commands, public, user, tools, console, report
 from http_server_tools.extensions import (
     bcrypt,
     cache,
@@ -78,6 +78,7 @@ def register_blueprints(app):
     app.register_blueprint(user.views.blueprint)
     app.register_blueprint(tools.views.blueprint)
     app.register_blueprint(console.views.blueprint)
+    app.register_blueprint(report.views.blueprint)
     return None
 
 

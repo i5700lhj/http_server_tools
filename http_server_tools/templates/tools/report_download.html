@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+
+{% block title %}Report tools{% endblock %}
+
+{% block head %}
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <meta name="generator" content="Bootstrap Listr">
+  <!-- 将上传下载例子css/listr.pack中定义的下载文件图标资源提取出来，单独使用-->
+  <link rel="stylesheet" href="{{url_for('static', filename='css/listr.pack.icon.css')}}">
+  <style>
+    .download-main{
+        background: #fff;
+        width: 1200px;
+        margin: 0 auto;
+        overflow: hidden;
+        padding: 10px;
+    }
+    .btn-secondary{
+        width: 80px;
+        color:#373a3c;background-color:#fff;border-color:#ccc
+    }
+  </style>
+
+
+{% endblock %}
+
+{% block main %}
+{% if current_user and current_user.is_authenticated %}
+    <h3 class="page-title" style="text-align: center;">测试报告生成工具</h3>
+{% else %}
+    <h3 class="page-title">请登录</h3>
+{% endif %}
+<div class="download-main">
+  <div>
+    <a class="btn btn-secondary" onclick="window.history.go(-1)">Back</a>
+  </div>
+  <br/>
+    <div class="table-responsive">
+
+      <table id="listr-table" class="table table-hover">
+
+        <thead>
+          <tr>
+            <th class="text-xs-left " data-sort="string">Name</th>
+            <th class="text-xs-right " data-sort="int">Size</th>
+            <th class="text-xs-right " data-sort="int">Modified</th>
+          </tr>
+        </thead>
+        <tfoot>
+          <tr>
+            <td colspan="3">
+                <small class="pull-xs-left text-muted" dir="ltr">{{total.dir}} folders and {{total.file}} files, {{total.size | size_fmt}} in total</small>
+            </td>
+          </tr>
+        </tfoot>
+        <tbody>
+          {% for entry in contents if entry.type == 'dir' %}
+          <tr>
+              <td class="text-xs-left " data-sort-value="dir-{{entry.name | lower}}"><i class="fa fa-fw fa-folder " aria-hidden="true"></i>&nbsp;<a href="{{entry.name}}/" ><strong>{{entry.name}}</strong></a></td>
+            <td class="text-xs-right " data-sort-value="-1">&mdash;</td>
+            <td class="text-xs-right " data-sort-value="{{entry.mtime}}" title="{{entry.mtime | time_fmt}}">{{entry.mtime | humanize}}</td>
+          </tr>
+          {% endfor %}
+          {% for entry in contents if entry.type == 'file' %}
+          <tr>
+              <td class="text-xs-left " data-sort-value="file-{{entry.name | lower}}"><i class="fa fa-fw {{entry.name | icon_fmt}} " aria-hidden="true"></i>&nbsp;
+              <a {% if entry.name | data_fmt not in ['unknown', 'archive'] %} data-toggle="modal" data-target="#viewer-modal" data-type="{{entry.name | data_fmt}}" {% endif %} href="{{entry.name}}" data-size="{{entry.size | size_fmt}}">{{entry.name}}</a>
+              </td>
+              <td class="text-xs-right " data-sort-value="{{entry.size}}" title="{{entry.size}} bytes">{{entry.size | size_fmt}}</td>
+              <td class="text-xs-right " data-sort-value="{{entry.mtime}}" title="{{entry.mtime | time_fmt}}">{{entry.mtime | humanize}}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div class="modal fade" id="viewer-modal" tabindex="-1" role="dialog" aria-labelledby="file-name" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+
+            <button type="button" class="close pull-xs-right" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title text-left" id="file-name">&nbsp;</h4>
+            <small class="text-muted" id="file-meta"></small><br/><br/>
+            <a href="#" class="fullview" download>If the file is not downloaded successfully, Please click <u>Download</u> to download it.</a>
+          </div>
+          <!--
+          <div class="modal-body"></div>
+
+          <div class="modal-footer">
+            <div class="pull-xs-right">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+              <div class="btn-group">
+                <a href="#" class="btn btn-primary fullview" download>Download</a>
+                </div>
+              </div>
+            </div>
+            -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="uploader-modal" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-body">
+            <form id="upload-files" action="./php/form_upload.php" method="post" enctype="multipart/form-data">
+                <input type="file" name="files[]" id="filer_input" multiple="multiple">
+            </form>
+          </div>
+          <div class="modal-footer">
+            <div class="pull-xs-right">
+              <button type="button" id="close-uploader" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="{{url_for('static', filename='js/jquery.min.js')}}"></script>
+  <script type="text/javascript" src="{{url_for('static', filename='js/tether.min.js')}}"></script>
+  <script type="text/javascript" src="{{url_for('static', filename='js/bootstrap.min.js')}}"></script>
+  <script type="text/javascript" src="{{url_for('static', filename='js/listr.pack.js')}}"></script>
+  <script type="text/javascript" src="{{url_for('static', filename='js/jquery.filer.min.js')}}"></script>
+  <script type="text/javascript" src="{{url_for('static', filename='js/custom.js')}}"></script>
+{% endblock %}
+
+

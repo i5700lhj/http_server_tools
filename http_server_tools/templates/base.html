@@ -37,6 +37,7 @@
                     <a href="{{ url_for('tools.cards') }}">Tools</a>
                     <ul>
                         <li><a href="{{ url_for('tools.upload_file') }}">Generate Tool</a></li>
+                        <li><a href="{{ url_for('report.report') }}">Report Tool</a></li>
                     </ul>
                 </li>
                     {% if current_user.is_admin %}

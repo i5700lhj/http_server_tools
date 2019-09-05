@@ -39,7 +39,11 @@ Flask-DebugToolbar==0.10.1
 # Environment variable parsing
 environs==4.0.0
 
+# Http
+requests==2.22.0
+
 # Tools
 xlrd==1.2.0
 humanize==0.5.1
 flask-restful==0.3.7
+pyecharts==1.5.0
