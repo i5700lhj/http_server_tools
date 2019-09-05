@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Awesome-pyecharts</title>
+            <script type="text/javascript" src="https://assets.pyecharts.org/assets/echarts.min.js"></script>
+
+    
+</head>
+<body>
+        <style>
+        .tab {
+            overflow: hidden;
+            border: 1px solid #ccc;
+            background-color: #f1f1f1;
+        }
+
+        .tab button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 12px 16px;
+            transition: 0.3s;
+        }
+
+        .tab button:hover {
+            background-color: #ddd;
+        }
+
+        .tab button.active {
+            background-color: #ccc;
+        }
+
+        .chart-container {
+            display: none;
+            padding: 6px 12px;
+            border-top: none;
+        }
+    </style>
+    <div class="tab">
+            <button class="tablinks" onclick="showChart(event, '371074ab9e534499a6ff747e46298088')">process_cpu_seconds_total</button>
+    </div>
+
+    <div class="box">
+                <div id="371074ab9e534499a6ff747e46298088" class="chart-container" style="width:900px; height:500px;"></div>
+    <script>
+        var chart_371074ab9e534499a6ff747e46298088 = echarts.init(
+            document.getElementById('371074ab9e534499a6ff747e46298088'), 'white', {renderer: 'canvas'});
+        var option_371074ab9e534499a6ff747e46298088 = {
+    "animation": true,
+    "animationThreshold": 2000,
+    "animationDuration": 1000,
+    "animationEasing": "cubicOut",
+    "animationDelay": 0,
+    "animationDurationUpdate": 300,
+    "animationEasingUpdate": "cubicOut",
+    "animationDelayUpdate": 0,
+    "color": [
+        "#c23531",
+        "#2f4554",
+        "#61a0a8",
+        "#d48265",
+        "#749f83",
+        "#ca8622",
+        "#bda29a",
+        "#6e7074",
+        "#546570",
+        "#c4ccd3",
+        "#f05b72",
+        "#ef5b9c",
+        "#f47920",
+        "#905a3d",
+        "#fab27b",
+        "#2a5caa",
+        "#444693",
+        "#726930",
+        "#b2d235",
+        "#6d8346",
+        "#ac6767",
+        "#1d953f",
+        "#6950a1",
+        "#918597"
+    ],
+    "series": [
+        {
+            "type": "line",
+            "connectNulls": false,
+            "symbolSize": 4,
+            "showSymbol": true,
+            "smooth": false,
+            "step": false,
+            "data": [
+                [
+                    "2019-09-05 10:43:12",
+                    "4426.22"
+                ],
+                [
+                    "2019-09-05 10:43:27",
+                    "4426.42"
+                ],
+                [
+                    "2019-09-05 10:43:42",
+                    "4426.65"
+                ],
+                [
+                    "2019-09-05 10:43:57",
+                    "4426.85"
+                ],
+                [
+                    "2019-09-05 10:44:12",
+                    "4427.08"
+                ],
+                [
+                    "2019-09-05 10:44:27",
+                    "4427.28"
+                ],
+                [
+                    "2019-09-05 10:44:42",
+                    "4427.52"
+                ],
+                [
+                    "2019-09-05 10:44:57",
+                    "4427.72"
+                ],
+                [
+                    "2019-09-05 10:45:12",
+                    "4427.94"
+                ],
+                [
+                    "2019-09-05 10:45:27",
+                    "4428.14"
+                ],
+                [
+                    "2019-09-05 10:45:42",
+                    "4428.37"
+                ],
+                [
+                    "2019-09-05 10:45:57",
+                    "4428.57"
+                ]
+            ],
+            "hoverAnimation": true,
+            "label": {
+                "show": true,
+                "position": "top",
+                "margin": 8
+            },
+            "lineStyle": {
+                "width": 1,
+                "opacity": 1,
+                "curveness": 0,
+                "type": "solid"
+            },
+            "areaStyle": {
+                "opacity": 0
+            },
+            "markPoint": {
+                "symbolSize": [
+                    100,
+                    60
+                ],
+                "label": {
+                    "show": true,
+                    "position": "inside",
+                    "color": "#fff",
+                    "margin": 8
+                },
+                "data": [
+                    {
+                        "type": "min"
+                    }
+                ]
+            }
+        }
+    ],
+    "legend": [
+        {
+            "data": [
+                ""
+            ],
+            "selected": {
+                "": true
+            },
+            "show": true
+        }
+    ],
+    "tooltip": {
+        "show": true,
+        "trigger": "item",
+        "triggerOn": "mousemove|click",
+        "axisPointer": {
+            "type": "line"
+        },
+        "textStyle": {
+            "fontSize": 14
+        },
+        "borderWidth": 0
+    },
+    "xAxis": [
+        {
+            "show": true,
+            "scale": false,
+            "nameLocation": "end",
+            "nameGap": 15,
+            "gridIndex": 0,
+            "inverse": false,
+            "offset": 0,
+            "splitNumber": 5,
+            "minInterval": 0,
+            "splitLine": {
+                "show": false,
+                "lineStyle": {
+                    "width": 1,
+                    "opacity": 1,
+                    "curveness": 0,
+                    "type": "solid"
+                }
+            },
+            "data": [
+                "2019-09-05 10:43:12",
+                "2019-09-05 10:43:27",
+                "2019-09-05 10:43:42",
+                "2019-09-05 10:43:57",
+                "2019-09-05 10:44:12",
+                "2019-09-05 10:44:27",
+                "2019-09-05 10:44:42",
+                "2019-09-05 10:44:57",
+                "2019-09-05 10:45:12",
+                "2019-09-05 10:45:27",
+                "2019-09-05 10:45:42",
+                "2019-09-05 10:45:57"
+            ]
+        }
+    ],
+    "yAxis": [
+        {
+            "show": true,
+            "scale": false,
+            "nameLocation": "end",
+            "nameGap": 15,
+            "gridIndex": 0,
+            "inverse": false,
+            "offset": 0,
+            "splitNumber": 5,
+            "minInterval": 0,
+            "splitLine": {
+                "show": false,
+                "lineStyle": {
+                    "width": 1,
+                    "opacity": 1,
+                    "curveness": 0,
+                    "type": "solid"
+                }
+            }
+        }
+    ],
+    "title": [
+        {}
+    ]
+};
+        chart_371074ab9e534499a6ff747e46298088.setOption(option_371074ab9e534499a6ff747e46298088);
+    </script>
+    </div>
+
+    <script>
+    </script>
+    <script>
+        (function() {
+            containers = document.getElementsByClassName("chart-container");
+            if(containers.length > 0) {
+                containers[0].style.display = "block";
+            }
+        })()
+
+        function showChart(evt, chartID) {
+            let containers = document.getElementsByClassName("chart-container");
+            for (let i = 0; i < containers.length; i++) {
+                containers[i].style.display = "none";
+            }
+
+            let tablinks = document.getElementsByClassName("tablinks");
+            for (let i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = "tablinks";
+            }
+
+            document.getElementById(chartID).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+    </script>
+</body>
+</html>
